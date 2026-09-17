@@ -9,7 +9,7 @@ public class SoundFXManager : MonoBehaviour
     public float masterAudioVolume = 1f;
     private void Awake()
     {
-        Instance ??= this;
+        Instance = Instance != null ? Instance : this;
     }
     
 
