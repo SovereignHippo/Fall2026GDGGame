@@ -10,6 +10,7 @@ public class SoundFXManager : MonoBehaviour
     private void Awake()
     {
         Instance = Instance != null ? Instance : this;
+        masterAudioVolume = PlayerPrefs.GetFloat("sound", 1f);
     }
     
 
