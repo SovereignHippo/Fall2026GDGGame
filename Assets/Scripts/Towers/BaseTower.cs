@@ -61,7 +61,7 @@ public class BaseTower : MonoBehaviour
         {
             GameObject temp = Instantiate(projectile, transform.position, Quaternion.identity); //Spawn projectile
             BasicProjectile tempScript = temp.GetComponent<BasicProjectile>();
-            tempScript.SetTarget(currentTargetTransform); //Give projectile target's positions
+            tempScript.SetTarget(currentTargetTransform, transform); //Give projectile target's positions
             tempScript.SetRange(range); //Pass through the range
 
             fireRateTimer = 0; //Reset Timer

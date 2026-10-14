@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class BasicProjectile : MonoBehaviour
 {
+    [SerializeField] private int enemyLayer;
+    [SerializeField] private float speed;
 
-    private Transform targetTransform;
+    private Vector3 targetDirection;
 
     private Vector3 startingPosition;
 
@@ -17,15 +19,15 @@ public class BasicProjectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(targetTransform != null)
+        if(targetDirection != null)
         {
+            
             //move towards enemy
-
-            transform.position += new Vector3(1, 0, 0); //TEST CODE
+            transform.position += Vector3.Normalize(targetDirection) * speed * Time.deltaTime;
         }
 
 
-        //On hit delete itself
+        
 
         // delete itself if goes out of range
         if(range != 0)
@@ -40,9 +42,21 @@ public class BasicProjectile : MonoBehaviour
 
     }
 
-    public void SetTarget(Transform targetLocation)
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        targetTransform = targetLocation;
+        
+        //On hit delete itself
+        if (collision.gameObject.layer == enemyLayer)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void SetTarget(Transform targetLocation, Transform towerLocation)
+    {
+        targetDirection = targetLocation.position - towerLocation.position;
+        
     }
 
     public void SetRange(float newRange)
