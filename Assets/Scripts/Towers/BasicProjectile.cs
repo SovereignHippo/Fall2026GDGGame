@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BasicProjectile : MonoBehaviour
@@ -53,9 +54,9 @@ public class BasicProjectile : MonoBehaviour
         }
     }
 
-    public void SetTarget(Transform targetLocation, Transform towerLocation)
+    public void SetTarget(Vector3 targetLocation, Transform towerLocation)
     {
-        targetDirection = targetLocation.position - towerLocation.position;
+        targetDirection = targetLocation - towerLocation.position;
         
     }
 
@@ -63,4 +64,6 @@ public class BasicProjectile : MonoBehaviour
     {
         range = newRange;
     }
+
+    
 }

@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,13 +7,13 @@ public class BaseTower : MonoBehaviour
 {
 
     [SerializeField] private int sellValue;
-    [SerializeField] private float range;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private float fireRateCooldown;
+    [SerializeField] private protected float range;
+    [SerializeField] private protected GameObject projectile;
+    [SerializeField] private protected float fireRateCooldown;
     [SerializeField] private LayerMask enemyLayer;
 
-    private Transform currentTargetTransform;
-    private float fireRateTimer;
+    private protected Transform currentTargetTransform;
+    private protected float fireRateTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,7 +48,7 @@ public class BaseTower : MonoBehaviour
         fireRateTimer += Time.deltaTime; //Always increase the timer for cooldown
     }
 
-    private void LookAtTarget()
+    public virtual void LookAtTarget()
     {
         float angle = Mathf.Atan2((currentTargetTransform.position.y - transform.position.y), (currentTargetTransform.position.x - transform.position.x)); //Calculate angle direction towards enemy
         angle = angle * (180 / Mathf.PI ); // convert to degrees
@@ -55,13 +56,13 @@ public class BaseTower : MonoBehaviour
         
     }
 
-    private void Attack()
+    public virtual void Attack()
     {
         if (fireRateTimer > fireRateCooldown)
         {
             GameObject temp = Instantiate(projectile, transform.position, Quaternion.identity); //Spawn projectile
             BasicProjectile tempScript = temp.GetComponent<BasicProjectile>();
-            tempScript.SetTarget(currentTargetTransform, transform); //Give projectile target's positions
+            tempScript.SetTarget(currentTargetTransform.position, transform); //Give projectile target's positions
             tempScript.SetRange(range); //Pass through the range
 
             fireRateTimer = 0; //Reset Timer
@@ -78,6 +79,18 @@ public class BaseTower : MonoBehaviour
             currentTargetTransform = hits[0].transform;
             //Debug.Log("Target Aquired!");
         }
+    }
+
+    public Vector3 AngleToUnitVector(float angleInDegrees)
+    {
+        float radians = angleInDegrees * (float)(Math.PI / 180.0);
+        // In Unity, use: float radians = angleInDegrees * Mathf.Deg2Rad;
+
+        return new Vector3(
+            (float)Math.Cos(radians),
+            (float)Math.Sin(radians),
+            0
+        );
     }
 
 }
