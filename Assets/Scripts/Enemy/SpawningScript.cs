@@ -4,12 +4,17 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using NUnit.Framework;
+using UnityEditor;
 using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class SpawningScript : MonoBehaviour
 {
     [SerializeField] private float interval = 0.1f;
+    [SerializeField] private Transform spawn;
+    [SerializeField] private GameObject EnemyLevel1;
+    [SerializeField] private GameObject EnemyLevel2;
+    [SerializeField] private GameObject EnemyLevel3;
     private int level = 0;
     private Coroutine repeatCoroutine;
     private TextAsset CurrentLevelFile;
@@ -70,19 +75,19 @@ public class SpawningScript : MonoBehaviour
         char SpawnInstruction = LevelString[spawnIdx++];
 
 
-        if (SpawnInstruction == '0')
+        if (SpawnInstruction == '0') //00 is one cycle 01 is 2 cycles 02 is 3 etc
         {
             Debug.Log(
                 "Waiting"
             );
-            waitTime = int.Parse(LevelString[spawnIdx++].ToString(), System.Globalization.NumberStyles.HexNumber) - 1; //Subtract 1 since it already waited this go.
+            waitTime = int.Parse(LevelString[spawnIdx++].ToString(), System.Globalization.NumberStyles.HexNumber);
             return;
         }
 
         switch (SpawnInstruction)
         {
             case '1':
-                Debug.Log("1");
+                Instantiate(EnemyLevel1, spawn);
                 break;
             case '2':
                 Debug.Log("2");
