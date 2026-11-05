@@ -64,6 +64,7 @@ public class BaseTower : MonoBehaviour
             BasicProjectile tempScript = temp.GetComponent<BasicProjectile>();
             tempScript.SetTarget(currentTargetTransform.position, transform); //Give projectile target's positions
             tempScript.SetRange(range); //Pass through the range
+            tempScript.SetCollisionAmount(1); //Collision amount, change later #FIXME
 
             fireRateTimer = 0; //Reset Timer
         }

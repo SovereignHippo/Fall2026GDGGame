@@ -1,16 +1,26 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BasicProjectile : MonoBehaviour
 {
     [SerializeField] private int enemyLayer;
     [SerializeField] private float speed;
+    
+    private int collisionsLeft = 1;
 
     private Vector3 targetDirection;
 
     private Vector3 startingPosition;
 
     private float range;
+
+    private List<GameObject> hits = new List<GameObject>();
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,6 +50,24 @@ public class BasicProjectile : MonoBehaviour
         }
         
 
+        
+        for (int i = 0; i < hits.Count; i++)
+        {
+            if (collisionsLeft <= 0)
+            {
+                Destroy(gameObject);
+                break;
+            }
+
+            GameObject hitGameObject = hits[0];
+            collisionsLeft--;
+            hitGameObject.GetComponent<EnemyScript>().EnemyHit();
+        }
+
+        if (collisionsLeft <= 0)
+        {
+            Destroy(gameObject);
+        }
 
     }
 
@@ -47,11 +75,12 @@ public class BasicProjectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         
-        //On hit delete itself
-        if (collision.gameObject.layer == enemyLayer)
+        if (collision.gameObject.layer != enemyLayer)
         {
-            Destroy(gameObject);
+            return;
         }
+
+        hits.Add(collision.gameObject);
     }
 
     public void SetTarget(Vector3 targetLocation, Transform towerLocation)
@@ -65,5 +94,9 @@ public class BasicProjectile : MonoBehaviour
         range = newRange;
     }
 
+    public void SetCollisionAmount(int collisions)
+    {
+        collisionsLeft = collisions;
+    }
     
 }
