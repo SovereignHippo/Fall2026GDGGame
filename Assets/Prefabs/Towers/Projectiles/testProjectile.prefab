@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasicProjectile
   enemyLayer: 9
-  speed: 4
+  speed: 10
 --- !u!58 &-8709160875394278909
 CircleCollider2D:
   m_ObjectHideFlags: 0

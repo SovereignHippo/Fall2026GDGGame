@@ -6,17 +6,26 @@ public class MovementScript : MonoBehaviour
 {
     private int target = 1;
     private GameObject TargetParentObject;
-    [SerializeField] float speed = 1.0f;
-    [SerializeField] int health = 1;
+    private int health;
+    private float speed = 1.0f;
+
 
     void Start()
     {
         TargetParentObject = GameObject.Find("PathfindingObjects");
     }
 
-    public void SetTargetInt(int targetInt)
+    public int GetTargetInt()
     {
-        target = targetInt;
+        return target;
+    }
+
+
+    public void Setup(int healthIn, float speedIn, int targetIn = 1)
+    {
+        health = healthIn;
+        speed = speedIn;
+        target = targetIn;
     }
 
 
