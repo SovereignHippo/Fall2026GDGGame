@@ -1,8 +1,9 @@
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 [RequireComponent(typeof(MovementScript))]
+
+[RequireComponent(typeof(SpriteRenderer))]
 public class EnemyScript : MonoBehaviour
 {
     [SerializeField] int health;
@@ -14,17 +15,25 @@ public class EnemyScript : MonoBehaviour
     private GameObject TargetParentObject;
 
     MovementScript movementScript;
+    SpriteRenderer spriteRenderer;
 
     void SetTarget(int targetIn)
     {
         target = targetIn;
     }
+
     void Start()
     {
         TargetParentObject = GameObject.Find("PathfindingObjects");
 
         movementScript = GetComponent<MovementScript>();
         movementScript.Setup(health, speed, target);
+        
+    }
+
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -67,6 +76,11 @@ public class EnemyScript : MonoBehaviour
     public int GetHealth()
     {
         return health;
+    }
+    
+    public void SetZValue(int ZValue)
+    {
+        spriteRenderer.sortingOrder = ZValue;
     }
 
     public void EnemyHit()
