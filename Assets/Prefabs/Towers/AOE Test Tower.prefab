@@ -200,7 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AOETower
   sellValue: 0
   range: 4
-  projectile: {fileID: 998347232196127530, guid: b7c580a9e2b650f40975b68665dcdc2d, type: 3}
+  projectile: {fileID: 898447497079218195, guid: 3b52c5c85bc9e354b99261bb161bc004, type: 3}
   fireRateCooldown: 3
   enemyLayer:
     serializedVersion: 2
