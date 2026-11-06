@@ -52,6 +52,8 @@ public class SpawningScript : MonoBehaviour
     bool fileLoaded = false;
     int spawnIdx = 0;
     int waitTime = 0;
+
+    int zIndex = 10;
     private void SpawningFunc()
     {
         if (waitTime > 0)
@@ -87,7 +89,9 @@ public class SpawningScript : MonoBehaviour
         switch (SpawnInstruction)
         {
             case '1':
-                Instantiate(EnemyLevel1, spawn);
+                GameObject temp = Instantiate(EnemyLevel1, spawn);
+                EnemyScript enemyScript = temp.GetComponent<EnemyScript>();
+                enemyScript.SetZValue(zIndex--);
                 break;
             case '2':
                 Debug.Log("2");
