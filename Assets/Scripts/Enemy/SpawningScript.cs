@@ -58,7 +58,6 @@ public class SpawningScript : MonoBehaviour
     {
         if (waitTime > 0)
         {
-            Debug.Log("Waiting");
             waitTime--;
             return;
         }
@@ -79,9 +78,6 @@ public class SpawningScript : MonoBehaviour
 
         if (SpawnInstruction == '0') //00 is one cycle 01 is 2 cycles 02 is 3 etc
         {
-            Debug.Log(
-                "Waiting"
-            );
             waitTime = int.Parse(LevelString[spawnIdx++].ToString(), System.Globalization.NumberStyles.HexNumber);
             return;
         }
